@@ -14,6 +14,9 @@
       </div>
     </div>
     <Frame/>
+    <footer>
+      Made with ❤️ by <a href="https://github.com/aldnav" target="_blank">aldnav</a>
+    </footer>
   </div>
 </template>
 
@@ -81,6 +84,12 @@ export default {
 .header-content .content a:hover >
 .fa-twitter {
   color: #fff;
+}
+
+footer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
 </style>
