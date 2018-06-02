@@ -1,6 +1,9 @@
 <template>
   <div class="container effect7">
     <canvas id="canvas"></canvas>
+    <div class="dl-vignette" v-on:click="download" v-if="hasUploaded">
+      <span>Download photo</span>
+    </div>
     <div class="actions">
       <input type="file" name="file" id="file" class="inputfile" accept="image/*"/>
       <label for="file" class="btn">Update photo</label>
@@ -10,9 +13,24 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Frame',
   props: {
     msg: String
+  },
+
+  data: function() {
+    return {
+      hasUploaded: false
+    };
+  },
+
+  methods: {
+    download() {
+      var link = document.createElement('a');
+      link.download = 'endalz.png';
+      link.href = document.getElementById('canvas').toDataURL()
+      link.click();
+    }
   },
 
   mounted() {
@@ -30,6 +48,7 @@ export default {
         }
       }
     });
+    var $this = this;
 
     function renderFrame(ctx) {
       let canvas = ctx.canvas;
@@ -62,14 +81,16 @@ export default {
       var ctx = document.getElementById('canvas').getContext('2d');
       var reader  = new FileReader();
       var file = e.target.files[0];
+      this.hasUploaded = true;
       img.onload = function() {
-          // @TODO: Scale image or center
-          // ctx.canvas.width = img.width;
-          // ctx.canvas.height = img.height;
-          ctx.drawImage(img, 0, 0
-              , ctx.canvas.width, ctx.canvas.height
-          );
-          renderFrame(ctx);
+        $this.hasUploaded = true;
+        // @TODO: Scale image or center
+        // ctx.canvas.width = img.width;
+        // ctx.canvas.height = img.height;
+        ctx.drawImage(img, 0, 0
+            , ctx.canvas.width, ctx.canvas.height
+        );
+        renderFrame(ctx);
       }
       reader.onloadend = function () {
           img.src = reader.result;
@@ -118,6 +139,31 @@ export default {
 #canvas {
   width: 100%;
   height: 100%;
+}
+
+.dl-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 480px;
+  height: 480px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.dl-vignette:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dl-vignette span {
+  font-size: 18px;
+  color: white;
 }
 
 .actions {
