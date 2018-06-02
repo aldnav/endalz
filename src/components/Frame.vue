@@ -1,6 +1,10 @@
 <template>
   <div class="container effect7">
     <canvas id="canvas"></canvas>
+    <div class="actions">
+      <input type="file" name="file" id="file" class="inputfile" />
+      <label for="file" class="btn">Update photo</label>
+    </div>
   </div>
 </template>
 
@@ -62,7 +66,7 @@ export default {
   background: #fff;
   position: relative;
   z-index: 2;
-  margin-top: -120px;
+  margin-top: -160px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -92,4 +96,31 @@ export default {
   height: 100%;
 }
 
+.actions {
+  padding-top: 30px;
+}
+
+.btn {
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  background: #333333;
+  padding: 16px 40px 16px 40px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #6e46ae;
+  text-decoration: none;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
 </style>
