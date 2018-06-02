@@ -2,7 +2,7 @@
   <div class="container effect7">
     <canvas id="canvas"></canvas>
     <div class="actions">
-      <input type="file" name="file" id="file" class="inputfile" />
+      <input type="file" name="file" id="file" class="inputfile" accept="image/*"/>
       <label for="file" class="btn">Update photo</label>
     </div>
   </div>
@@ -16,7 +16,6 @@ export default {
   },
 
   mounted() {
-
     document.addEventListener('DOMContentLoaded', function() {
       document.fonts.load('10pt "Maven Pro"').then(renderCanvas);
 
@@ -25,33 +24,58 @@ export default {
         canvas.width  = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
 
-        let layer1 = {
-          top: canvas.height - 100,
-          height: 100,
-          width: canvas.width
-        };
-
         if (canvas.getContext) {
           let ctx = canvas.getContext('2d');
-
-          ctx.fillStyle = '#4a0d66';
-          ctx.fillRect(0, layer1.top, layer1.width, layer1.height);
-
-
-          let fontSize = 180;
-          ctx.font = `bold ${fontSize}px 'Maven Pro'`;
-          ctx.fillStyle = '#5b236f';
-          ctx.fillText("#", 140, 480);
-
-
-          fontSize = 30;
-          ctx.font = `bold ${fontSize}px 'Maven Pro'`;
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillText("#ENDALZ", layer1.width/2 - fontSize * 2, layer1.top + layer1.height/2 + 8);
+          renderFrame(ctx);
         }
       }
-
     });
+
+    function renderFrame(ctx) {
+      let canvas = ctx.canvas;
+      let layer1 = {
+        top: canvas.height - 100,
+        height: 100,
+        width: canvas.width
+      };
+
+      ctx.fillStyle = '#4a0d66';
+      ctx.fillRect(0, layer1.top, layer1.width, layer1.height);
+
+
+      let fontSize = 180;
+      ctx.font = `bold ${fontSize}px 'Maven Pro'`;
+      ctx.fillStyle = '#5b236f';
+      ctx.fillText("#", 140, 480);
+
+
+      fontSize = 30;
+      ctx.font = `bold ${fontSize}px 'Maven Pro'`;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText("#ENDALZ", layer1.width/2 - fontSize * 2, layer1.top + layer1.height/2 + 8);
+    }
+
+    let img = new Image();
+    document.getElementById('file').addEventListener('change', handleFiles, false);
+
+    function handleFiles(e) {
+      var ctx = document.getElementById('canvas').getContext('2d');
+      var reader  = new FileReader();
+      var file = e.target.files[0];
+      img.onload = function() {
+          // @TODO: Scale image or center
+          // ctx.canvas.width = img.width;
+          // ctx.canvas.height = img.height;
+          ctx.drawImage(img, 0, 0
+              , ctx.canvas.width, ctx.canvas.height
+          );
+          renderFrame(ctx);
+      }
+      reader.onloadend = function () {
+          img.src = reader.result;
+      }
+      reader.readAsDataURL(file);
+    }
 
   }
 };
