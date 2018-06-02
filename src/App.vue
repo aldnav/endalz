@@ -15,7 +15,7 @@
     </div>
     <Frame/>
     <footer>
-      Made with ❤️ by <a href="https://github.com/aldnav" target="_blank">aldnav</a>
+      Made with ❤️ by <a href="https://github.com/aldnav/endalz" target="_blank">aldnav</a>
     </footer>
   </div>
 </template>
