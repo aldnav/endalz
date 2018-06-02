@@ -14,33 +14,39 @@ export default {
   mounted() {
 
     document.addEventListener('DOMContentLoaded', function() {
-      let canvas = document.getElementById('canvas');
-      canvas.width  = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
+      document.fonts.load('10pt "Maven Pro"').then(renderCanvas);
 
-      let layer1 = {
-        top: canvas.height - 100,
-        height: 100,
-        width: canvas.width
-      };
+      function renderCanvas() {
+        let canvas = document.getElementById('canvas');
+        canvas.width  = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
 
-      if (canvas.getContext) {
-        let ctx = canvas.getContext('2d');
+        let layer1 = {
+          top: canvas.height - 100,
+          height: 100,
+          width: canvas.width
+        };
 
-        ctx.fillStyle = '#4a0d66';
-        ctx.fillRect(0, layer1.top, layer1.width, layer1.height);
+        if (canvas.getContext) {
+          let ctx = canvas.getContext('2d');
 
-        let fontSize = 180;
-        ctx.font = `bold ${fontSize}px Arial`;
-        ctx.fillStyle = '#5b236f';
-        ctx.fillText("#", 80, 485);
+          ctx.fillStyle = '#4a0d66';
+          ctx.fillRect(0, layer1.top, layer1.width, layer1.height);
 
 
-        fontSize = 30;
-        ctx.font = `bold ${fontSize}px Arial`;
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillText("#ENDALZ", layer1.width/2 - fontSize * 2, layer1.top + layer1.height/2);
+          let fontSize = 180;
+          ctx.font = `bold ${fontSize}px 'Maven Pro'`;
+          ctx.fillStyle = '#5b236f';
+          ctx.fillText("#", 140, 480);
+
+
+          fontSize = 30;
+          ctx.font = `bold ${fontSize}px 'Maven Pro'`;
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillText("#ENDALZ", layer1.width/2 - fontSize * 2, layer1.top + layer1.height/2 + 8);
+        }
       }
+
     });
 
   }
